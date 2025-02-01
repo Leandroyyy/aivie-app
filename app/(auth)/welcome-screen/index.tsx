@@ -1,6 +1,7 @@
-import { useRouter } from 'expo-router';
+import { useOAuth } from '@clerk/clerk-expo';
+import * as WebBrowser from 'expo-web-browser';
 import { useEffect } from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Platform, Pressable, Text, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { Hexagon } from '~/components/hexagon';
@@ -8,10 +9,10 @@ import { useFloatingAnimation } from '~/hooks/use-floating-animation';
 
 const GoogleImage = require('~/assets/google-icon.png');
 
-export default function WelcomeScreen() {
-  const router = useRouter();
-  const hexagonStyle = useFloatingAnimation(-1);
+WebBrowser.maybeCompleteAuthSession();
 
+export default function WelcomeScreen() {
+  const hexagonStyle = useFloatingAnimation(-1);
   const opacity = useSharedValue(0);
 
   useEffect(() => {
@@ -21,6 +22,34 @@ export default function WelcomeScreen() {
   const animatedStyle = useAnimatedStyle(() => ({
     opacity: opacity.value,
   }));
+
+  const googleOAuth = useOAuth({ strategy: 'oauth_google' });
+
+  async function handleLogin() {
+    try {
+      const oAuthFlow = await googleOAuth.startOAuthFlow();
+
+      if (oAuthFlow.authSessionResult?.type === 'success') {
+        if (oAuthFlow.setActive) {
+          await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
+        }
+      }
+    } catch (error) {
+      console.log(JSON.stringify(error));
+    }
+  }
+
+  useEffect(() => {
+    if (Platform.OS !== 'web') {
+      WebBrowser.warmUpAsync();
+    }
+
+    return () => {
+      if (Platform.OS !== 'web') {
+        WebBrowser.coolDownAsync();
+      }
+    };
+  }, []);
 
   return (
     <Animated.View style={[{ flex: 1 }, animatedStyle]}>
@@ -58,7 +87,7 @@ export default function WelcomeScreen() {
         <View className="flex-1 items-center justify-end pb-8">
           <Pressable
             className="w-[80%] flex-row items-center justify-center gap-5 rounded-lg border border-gray-300 bg-white py-2 shadow-md"
-            onPress={() => router.push('/(app)/main-screen' as any)}>
+            onPress={handleLogin}>
             <Image source={GoogleImage} style={{ width: 30, height: 30 }} />
             <Text className="font-bold text-gray-800">Entrar com o Google</Text>
           </Pressable>
