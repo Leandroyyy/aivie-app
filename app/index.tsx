@@ -1,19 +1,33 @@
-import { Stack, Link } from 'expo-router';
+import { useRouter } from 'expo-router';
+import { useEffect } from 'react';
+import Animated, {
+  runOnJS,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
-import { Button } from '~/components/Button';
-import { Container } from '~/components/Container';
-import { ScreenContent } from '~/components/ScreenContent';
+import InitialLoading from './(auth)/initial-loading';
 
 export default function Home() {
+  const router = useRouter();
+  const opacity = useSharedValue(1);
+
+  useEffect(() => {
+    setTimeout(() => {
+      opacity.value = withTiming(0, { duration: 500 }, () => {
+        runOnJS(router.replace)('/(auth)/welcome-screen' as any);
+      });
+    }, 2000);
+  }, []);
+
+  const animatedStyle = useAnimatedStyle(() => ({
+    opacity: opacity.value,
+  }));
+
   return (
-    <>
-      <Stack.Screen options={{ title: 'Home' }} />
-      <Container>
-        <ScreenContent path="app/index.tsx" title="Home" />
-        <Link href={{ pathname: '/details', params: { name: 'Dan' } }} asChild>
-          <Button title="Show Details" />
-        </Link>
-      </Container>
-    </>
+    <Animated.View style={[{ flex: 1 }, animatedStyle]}>
+      <InitialLoading />
+    </Animated.View>
   );
 }
