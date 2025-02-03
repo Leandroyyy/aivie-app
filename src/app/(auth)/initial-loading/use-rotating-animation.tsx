@@ -13,7 +13,7 @@ export const useRotatingAnimation = () => {
 
   rotation.value = withRepeat(
     withSequence(
-      withTiming(225, { duration: 1000, easing: Easing.linear }),
+      withTiming(135, { duration: 500, easing: Easing.linear }),
       withDelay(500, withTiming(45, { duration: 0 }))
     ),
     -1,

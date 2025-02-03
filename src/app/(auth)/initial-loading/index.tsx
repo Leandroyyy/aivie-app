@@ -44,7 +44,7 @@ export default function InitialLoading() {
             },
           ]}
         />
-        <Text className="text-2xl font-bold text-white">AIVISION</Text>
+        <Text className="text-2xl font-bold text-white">AIVIE</Text>
       </View>
     </View>
   );

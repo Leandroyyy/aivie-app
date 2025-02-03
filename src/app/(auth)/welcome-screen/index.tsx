@@ -1,7 +1,7 @@
 import { useOAuth } from '@clerk/clerk-expo';
 import * as WebBrowser from 'expo-web-browser';
-import { useEffect } from 'react';
-import { Image, Platform, Pressable, Text, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { ActivityIndicator, Image, Platform, Pressable, Text, View } from 'react-native';
 import Animated, { useAnimatedStyle, useSharedValue, withTiming } from 'react-native-reanimated';
 
 import { Hexagon } from '~/components/hexagon';
@@ -15,6 +15,8 @@ export default function WelcomeScreen() {
   const hexagonStyle = useFloatingAnimation(-1);
   const opacity = useSharedValue(0);
 
+  const [isLoading, setIsLoading] = useState(true);
+
   useEffect(() => {
     opacity.value = withTiming(1, { duration: 500 });
   }, []);
@@ -27,15 +29,19 @@ export default function WelcomeScreen() {
 
   async function handleLogin() {
     try {
+      setIsLoading(true);
       const oAuthFlow = await googleOAuth.startOAuthFlow();
 
       if (oAuthFlow.authSessionResult?.type === 'success') {
         if (oAuthFlow.setActive) {
           await oAuthFlow.setActive({ session: oAuthFlow.createdSessionId });
         }
+      } else {
+        setIsLoading(false);
       }
     } catch (error) {
-      console.log(JSON.stringify(error));
+      setIsLoading(false);
+      console.error(JSON.stringify(error));
     }
   }
 
@@ -65,7 +71,7 @@ export default function WelcomeScreen() {
 
           <View className="flex flex-row items-center justify-center gap-5">
             <View className="h-8 w-8 rotate-45 border-[.6rem] border-white bg-transparent" />
-            <Text className="text-xl font-bold text-white">AIVISION</Text>
+            <Text className="text-xl font-bold text-white">AIVIE</Text>
           </View>
         </View>
 
@@ -86,10 +92,17 @@ export default function WelcomeScreen() {
 
         <View className="flex-1 items-center justify-end pb-8">
           <Pressable
-            className="w-[80%] flex-row items-center justify-center gap-5 rounded-lg border border-gray-300 bg-white py-2 shadow-md"
-            onPress={handleLogin}>
-            <Image source={GoogleImage} style={{ width: 30, height: 30 }} />
-            <Text className="font-bold text-gray-800">Entrar com o Google</Text>
+            className="w-[80%] flex-row items-center justify-center gap-5 rounded-lg border border-gray-300 bg-white py-2 shadow-md active:opacity-70"
+            onPress={handleLogin}
+            disabled={isLoading}>
+            {isLoading ? (
+              <ActivityIndicator size="small" color="#555" />
+            ) : (
+              <Image source={GoogleImage} style={{ width: 30, height: 30 }} />
+            )}
+            <Text className="text-lg font-bold text-gray-800">
+              {isLoading ? '' : 'Entrar com o Google'}
+            </Text>
           </Pressable>
         </View>
       </View>

@@ -1,7 +1,7 @@
 import 'global.css';
 
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
-import { router, Stack } from 'expo-router';
+import { router, SplashScreen, Stack } from 'expo-router';
 import { useEffect } from 'react';
 
 import InitialLoading from './(auth)/initial-loading';
@@ -10,27 +10,25 @@ import { tokenCache } from '~/storage/token-cache';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
 
+SplashScreen.preventAutoHideAsync();
+
 function InitialLayout() {
   const { isSignedIn, isLoaded } = useAuth();
 
   useEffect(() => {
     if (!isLoaded) return;
 
-    if (isSignedIn) {
-      router.replace('(app)/main-screen/' as any);
-    } else {
-      router.replace('(auth)/welcome-screen/' as any);
-    }
-  }, [isSignedIn]);
+    router.replace(isSignedIn ? '(app)/main-screen/' : ('(auth)/welcome-screen/' as any));
+  }, [isSignedIn, isLoaded]);
 
-  return isLoaded ? (
+  if (!isLoaded) {
+    return <InitialLoading />;
+  }
+
+  return (
     <Stack screenOptions={{ headerShown: false }}>
       <Stack.Screen name="index" />
-      <Stack.Screen name="(auth)/welcome-screen/index" />
-      <Stack.Screen name="(app)/main-screen/index" />
     </Stack>
-  ) : (
-    <InitialLoading />
   );
 }
 
