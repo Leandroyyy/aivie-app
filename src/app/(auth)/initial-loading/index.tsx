@@ -1,10 +1,11 @@
+import { StatusBar } from 'expo-status-bar';
 import React from 'react';
 import { Text, View } from 'react-native';
 import Animated from 'react-native-reanimated';
 
 import { useRotatingAnimation } from './use-rotating-animation';
 
-import { Hexagon } from '~/components/hexagon';
+import { AnimatedHexagon } from '~/components/animated-hexagon';
 import { useFloatingAnimation } from '~/hooks/use-floating-animation';
 
 export default function InitialLoading() {
@@ -14,15 +15,16 @@ export default function InitialLoading() {
 
   return (
     <View className="flex-1 items-center justify-center bg-aivie-green">
+      <StatusBar backgroundColor="#00875F" translucent={false} />
       <View className="absolute h-full w-full">
-        <Hexagon
+        <AnimatedHexagon
           animatedStyle={hexagon1Style}
           size={384}
           borderWidth={150}
           borderColor="#00905A"
           position={{ right: 240, top: -40 }}
         />
-        <Hexagon
+        <AnimatedHexagon
           animatedStyle={hexagon2Style}
           size={384}
           borderWidth={150}

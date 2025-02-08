@@ -1,35 +1,25 @@
-import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
-import Animated from 'react-native-reanimated';
+import { StyleProp, View, ViewStyle } from 'react-native';
 
 interface HexagonProps {
   animatedStyle?: StyleProp<ViewStyle>;
   size: number;
   borderWidth: number;
   borderColor: string;
-  position?: { top?: number; bottom?: number; left?: number; right?: number };
 }
 
-export const Hexagon: React.FC<HexagonProps> = ({
-  animatedStyle,
-  size,
-  borderWidth,
-  borderColor,
-  position,
-}) => {
+export function Hexagon({ animatedStyle, size, borderWidth, borderColor }: HexagonProps) {
   return (
-    <Animated.View
+    <View
       style={[
         animatedStyle,
         {
-          position: 'absolute',
+          transform: [{ rotate: '45deg' }],
           height: size,
           width: size,
           borderWidth,
           borderColor,
-          ...position,
         },
       ]}
     />
   );
-};
+}

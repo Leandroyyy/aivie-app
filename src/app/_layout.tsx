@@ -1,7 +1,7 @@
 import 'global.css';
 
 import { ClerkProvider, useAuth } from '@clerk/clerk-expo';
-import { router, SplashScreen, Stack } from 'expo-router';
+import { router, Stack } from 'expo-router';
 import { useEffect } from 'react';
 
 import InitialLoading from './(auth)/initial-loading';
@@ -9,8 +9,6 @@ import InitialLoading from './(auth)/initial-loading';
 import { tokenCache } from '~/storage/token-cache';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
-
-SplashScreen.preventAutoHideAsync();
 
 function InitialLayout() {
   const { isSignedIn, isLoaded } = useAuth();

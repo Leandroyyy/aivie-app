@@ -7,11 +7,13 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
+        tabBarHideOnKeyboard: true,
         tabBarStyle: { backgroundColor: '#fff', paddingBottom: 8, height: 60 },
         tabBarLabelStyle: { fontSize: 12 },
         tabBarActiveTintColor: '#00905A',
         tabBarInactiveTintColor: '#9CA3AF',
         tabBarIconStyle: { flexDirection: 'column', alignItems: 'center' },
+        headerShown: false,
       }}>
       <Tabs.Screen
         name="main-screen/index"
@@ -22,8 +24,9 @@ export default function TabLayout() {
       />
 
       <Tabs.Screen
-        name="clients/index"
+        name="clients"
         options={{
+          headerShown: false,
           title: 'Clientes',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user-friends" color={color} size={size} />
@@ -46,6 +49,15 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Feather name="more-horizontal" color={color} size={size} />
           ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="clients/(client-profile)/[id]"
+        options={{
+          headerShown: false,
+          href: null,
+          title: 'Perfil do cliente',
         }}
       />
     </Tabs>
