@@ -13,6 +13,7 @@ export default function StackLayout() {
         }}
       />
       <Stack.Screen name="(client-profile)/[id]" />
+      <Stack.Screen name="(client-profile)/measures/index" />
     </Stack>
   );
 }

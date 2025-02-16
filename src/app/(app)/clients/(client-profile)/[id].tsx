@@ -110,8 +110,13 @@ export default function ClientProfile() {
             </View>
 
             {/* Botão */}
-            <View className=" items-center">
-              <Pressable className="w-3/4 flex-row items-center justify-center gap-4 rounded-lg bg-aivie-green p-2">
+            <View className="flex-row items-center gap-4">
+              <Pressable
+                onPress={() => router.push('/(app)/clients/measures')}
+                className="w-1/2 flex-row justify-center rounded-lg border border-aivie-green bg-white p-2">
+                <Text className="text-lg font-semibold text-aivie-green">Capturar medidas</Text>
+              </Pressable>
+              <Pressable className="w-1/2 flex-row justify-center rounded-lg bg-aivie-green p-2">
                 <Text className="text-lg font-semibold text-aivie-light-gray">Salvar</Text>
               </Pressable>
             </View>
