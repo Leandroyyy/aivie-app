@@ -1,19 +1,23 @@
 import 'global.css';
 
-import { Stack } from 'expo-router';
+import { Stack, usePathname } from 'expo-router';
+import { useEffect } from 'react';
 
-export default function StackLayout() {
+import { useTabBarVisibility } from '~/context/tab-bar-visibility';
+
+export default function ClientsLayout() {
+  const pathname = usePathname();
+  const { setTabBarVisible } = useTabBarVisibility();
+
+  useEffect(() => {
+    setTabBarVisible(!pathname.startsWith('/clients/'));
+  }, [pathname]);
+
   return (
     <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen
-        name="index"
-        options={{
-          headerShown: false,
-          title: 'Clientes',
-        }}
-      />
+      <Stack.Screen name="index" />
+      <Stack.Screen name="capture-measure/index" />
       <Stack.Screen name="(client-profile)/[id]" />
-      <Stack.Screen name="(client-profile)/measures/index" />
     </Stack>
   );
 }

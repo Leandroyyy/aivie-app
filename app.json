@@ -15,7 +15,7 @@
       [
         "react-native-vision-camera",
         {
-          "cameraPermission": "Permitir que este app acesse a câmera para reconhecimento facial"
+          "cameraPermissionText": "$(PRODUCT_NAME) needs access to your Camera."
         }
       ]
     ],
@@ -35,18 +35,32 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Allow $(PRODUCT_NAME) to access your camera"
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./src/assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.anonymous.aivieapp"
+      "package": "com.anonymous.aivieapp",
+      "permissions": [
+        "android.permission.CAMERA"
+      ]
     },
     "androidStatusBar": {
       "backgroundColor": "#ffffff",
       "translucent": false
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "1783312c-2a07-4ba9-922c-a8475db484f9"
+      }
     }
   }
 }

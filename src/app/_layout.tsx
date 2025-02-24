@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import InitialLoading from './(auth)/initial-loading';
 
+import { TabBarVisibilityProvider } from '~/context/tab-bar-visibility';
 import { tokenCache } from '~/storage/token-cache';
 
 const publishableKey = process.env.EXPO_PUBLIC_CLERK_PUBLISHABLE_KEY as string;
@@ -24,9 +25,11 @@ function InitialLayout() {
   }
 
   return (
-    <Stack screenOptions={{ headerShown: false }}>
-      <Stack.Screen name="index" />
-    </Stack>
+    <TabBarVisibilityProvider>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name="index" />
+      </Stack>
+    </TabBarVisibilityProvider>
   );
 }
 

@@ -17,14 +17,14 @@ export default function ClientsScreen() {
       <View className="flex-row items-center justify-between gap-2">
         <View>
           <Text className="text-3xl text-aivie-text-light-gray">Pesquisar por cliente</Text>
-          <Text className="text-aivie-small-text-light-gray text-lg">
+          <Text className="text-lg text-aivie-small-text-light-gray">
             Acesse os <Text className="font-semibold">dados</Text> dos seus clientes
           </Text>
         </View>
         <Hexagon size={25} borderWidth={8} borderColor="#00905A" />
       </View>
 
-      <View className="bg-aivie-gray flex-row items-center justify-center gap-2 rounded-lg px-3">
+      <View className="flex-row items-center justify-center gap-2 rounded-lg bg-aivie-gray px-3">
         <Pressable onPress={() => inputRef.current?.focus()}>
           <FontAwesome5 name="search" size={24} color={isFocused ? '#00905A' : '#666666'} />
         </Pressable>

@@ -102,8 +102,8 @@ export default function ClientProfile() {
             </View>
 
             <View className="gap-2">
-              {renderInput('name', 'Nome', 'Digite seu nome')}
-              {renderInput('email', 'E-mail', 'Digite seu e-mail')}
+              {renderInput('name', 'Nome', 'Digite o nome')}
+              {renderInput('email', 'E-mail', 'Digite o e-mail')}
               {renderInput('focusDistance', 'Distância Focal (DF)', 'Digite a DF')}
               {renderInput('pupillaryDistance', 'Distância Pupilar (DP)', 'Digite a DP')}
               {renderInput('nasoPupillaryDistance', 'Distância Naso Pupilar (DNP)', 'Digite a DNP')}
@@ -112,7 +112,7 @@ export default function ClientProfile() {
             {/* Botão */}
             <View className="flex-row items-center gap-4">
               <Pressable
-                onPress={() => router.push('/(app)/clients/measures')}
+                onPress={() => router.push('/(app)/clients/capture-measure')}
                 className="w-1/2 flex-row justify-center rounded-lg border border-aivie-green bg-white p-2">
                 <Text className="text-lg font-semibold text-aivie-green">Capturar medidas</Text>
               </Pressable>

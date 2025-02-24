@@ -1,14 +1,19 @@
-import 'global.css';
-
 import { AntDesign, Feather, FontAwesome5 } from '@expo/vector-icons';
 import { Tabs } from 'expo-router';
+import 'global.css';
+
+import { useTabBarVisibility } from '~/context/tab-bar-visibility';
 
 export default function TabLayout() {
+  const { isTabBarVisible } = useTabBarVisibility();
+
   return (
     <Tabs
       screenOptions={{
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { backgroundColor: '#fff', paddingBottom: 8, height: 60 },
+        tabBarStyle: isTabBarVisible
+          ? { backgroundColor: '#fff', paddingBottom: 8, height: 60 }
+          : { display: 'none' }, // 👈 Esconde a Tab dinamicamente!
         tabBarLabelStyle: { fontSize: 12 },
         tabBarActiveTintColor: '#00905A',
         tabBarInactiveTintColor: '#9CA3AF',
@@ -26,7 +31,6 @@ export default function TabLayout() {
       <Tabs.Screen
         name="clients"
         options={{
-          headerShown: false,
           title: 'Clientes',
           tabBarIcon: ({ color, size }) => (
             <FontAwesome5 name="user-friends" color={color} size={size} />
@@ -49,15 +53,6 @@ export default function TabLayout() {
           tabBarIcon: ({ color, size }) => (
             <Feather name="more-horizontal" color={color} size={size} />
           ),
-        }}
-      />
-
-      <Tabs.Screen
-        name="clients/(client-profile)/[id]"
-        options={{
-          headerShown: false,
-          href: null,
-          title: 'Perfil do cliente',
         }}
       />
     </Tabs>

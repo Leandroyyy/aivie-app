@@ -40,7 +40,7 @@ function ClientItem({ id, name, image, email }: ClientItemProps) {
 
   return (
     <Pressable
-      onPress={() => router.push(`/clients/(client-profile)/${id}` as any)}
+      onPress={() => router.push(`/clients/client-profile/${id}` as any)}
       className="flex-row items-center gap-3 rounded-lg border border-aivie-border-gray bg-white p-2">
       <Image source={{ uri: image }} className="h-16 w-16 rounded-full" />
       <View className="flex-1">
